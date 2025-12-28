@@ -184,6 +184,7 @@ define(["ui/android", "ui/spawns", "ui/ribbon", "ui/panel", "util/config",
             workspace.setup(container);
             workspace.canvas.addEventListener("click", this.onClickEvent.bind(this));
             workspace.canvas.addEventListener("touchstart", this.onTouchEvent.bind(this));
+            workspace.canvas.addEventListener("deviceorientation", this.onDeviceOrientation.bind(this))
         }
 
         // Listens to click event.
@@ -196,6 +197,14 @@ define(["ui/android", "ui/spawns", "ui/ribbon", "ui/panel", "util/config",
             // double-click.
             e.preventDefault();
             this.onClick(e.touches[0]);
+        }
+
+        onDeviceOrientation(e) {
+            this.onClick({
+                target: workspace.canvas,
+                clientX: e.alpha || 0,
+                clientY: 100
+            })
         }
 
         onClick(e) {
